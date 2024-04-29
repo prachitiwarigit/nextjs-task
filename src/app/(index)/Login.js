@@ -170,7 +170,7 @@ const Login = ({ handleClose }) => {
         </div>
 
         <div style={{ textAlign: "center" }}>
-          Don't have an account? Signup
+          Do not have an account? Signup
         </div>
 
         <div style={{ textAlign: "center" }}>
