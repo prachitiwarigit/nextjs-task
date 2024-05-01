@@ -8,7 +8,7 @@ import RightContent from "./RightContent";
 import LeftContent from "./LeftContent";
 import axios from "axios";
 
-export default function JobDropdown() {
+export default function Content() {
   const [value, setValue] = useState(5);
   const [valuepage, setValuePage] = useState(5);
   const [filterSerach, setFilterSearch] = useState("");
@@ -54,13 +54,11 @@ export default function JobDropdown() {
   };
 
   useEffect(() => {
-    if (page != 1) {
       getjobcard();
-    }
   }, [page]);
-  useEffect(() => {
-    getjobcard();
-  }, []);
+  // useEffect(() => {
+  //   getjobcard();
+  // }, []);
 
   useEffect(() => {
     console.log("filterSerach0------------->", filterSerach);

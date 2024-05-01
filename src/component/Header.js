@@ -11,21 +11,21 @@ export default function Header() {
   const headerRef = useRef(null);
 
   const handleStickyHeader = () => {
-    window.addEventListener("scroll", () => {
-      if (
-        document.body.scrollTop > 80 ||
-        document.documentElement.scrollTop > 80
-      ) {
-        headerRef.current.classList.add("stricky-fixed");
-      } else {
-        headerRef.current.classList.remove("stricky-fixed");
-      }
-    });
+  //   window.addEventListener("scroll", () => {
+  //     if (
+  //       document.body.scrollTop > 80 ||
+  //       document.documentElement.scrollTop > 80
+  //     ) {
+  //       headerRef.current.classList.add("stricky-fixed");
+  //     } else {
+  //       headerRef.current.classList.remove("stricky-fixed");
+  //     }
+  //   });
   };
 
   useEffect(() => {
     handleStickyHeader();
-    return () => window.removeEventListener("scroll", handleStickyHeader);
+    // return () => window.removeEventListener("scroll", handleStickyHeader);
   }, []);
 
 

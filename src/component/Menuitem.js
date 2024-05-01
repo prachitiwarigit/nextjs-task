@@ -12,6 +12,7 @@ import Avatar from "@mui/material/Avatar";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -26,13 +27,59 @@ const style = {
 };
 
 export default function MenuItem() {
-  const pathname = usePathname();
+const [openRegistrationModal, setOpenRegistrationModal] = useState(false);
+  const [openLoginModal, setOpenLoginModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [userData, setUserData] = useState(null); // Initialize as null
+  const [access, setAccess] = useState(false); // Initialize as null
 
-  const [openRegistrationModal, setOpenRegistrationModal] =
-    React.useState(false);
-  const [openLoginModal, setOpenLoginModal] = React.useState(false);
+  
 
-  const access = window.sessionStorage.getItem("access");
+  
+  useEffect(() => {
+    const accessToken = window.sessionStorage.getItem("access");
+    if (accessToken) {
+      setAccess(true);
+      setIsModalOpen(true);
+    }
+  }, []); // Empty dependency array ensures this effect runs only once, when the component mounts
+  
+ 
+
+  // logout part
+  const handleLogout = () => { 
+    sessionStorage.removeItem("access");
+    setIsModalOpen(false);
+  };
+  
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = sessionStorage.getItem("access");
+
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+
+        const response = await axios.get(
+          `https://learnkoods-task.onrender.com/user_data/`,
+          config
+        );
+        setUserData(response.data.data);
+      } catch (error) {
+        console.error("Error fetching user data: ", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
 
   const handleOpenRegistrationModal = () => {
     setOpenRegistrationModal(true);
@@ -50,93 +97,27 @@ export default function MenuItem() {
     setOpenLoginModal(false);
   };
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
-  };
-
-  const [userData, setUserData] = useState([]);
-
-
-  // logout part
-  const data = async () => {
-   
-    try {
-      const token = sessionStorage.getItem("access");
-
-      // If token exists, include it in the request headers
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
-      const response = await axios.get(
-        `https://learnkoods-task.onrender.com/user_data/`,
-        config
-      );
-      console.log("Response:+++++++++++", response.data.data);
-      setUserData(response.data.data);
-    } catch (error) {
-      console.error("err", error);
-    }
-  };
-
-  useEffect(() => {
-    data();
-  }, []);
-
-
-
-  const handleLogout = () => {
-    sessionStorage.removeItem('access');
-    setIsModalOpen(false);
-    };
-
-
-
-
-
-
-
-
-
-
-
   return (
     <>
       <div className="menuitems-box">
         <div className="menu">
-          <p
-            className={`items_section about_button ${
-              pathname === "/aboutdoctor" ? "active" : ""
-            }`}
-          >
+          <p className="items_section">
             Home
           </p>
         </div>
 
         <div className="menu">
-          <p
-            className={`items_section about_button ${
-              pathname === "/aboutdoctor" ? "active" : ""
-            }`}
-          >
+          <p className="items_section">
             Find Jobs
           </p>
         </div>
 
         <div className="menu">
-          <Link href="/presentations">
-            <p
-              className={`items_section ${
-                pathname === "/presentations" ? "active" : ""
-              }`}
-            >
+         
+            <p className="items_section">
               Employers
             </p>
-          </Link>
+       
         </div>
 
         <div className="menu">
@@ -159,10 +140,11 @@ export default function MenuItem() {
           {/* Open registration and login modal on click */}
 
           {access ? (
-         <div className="avatar">
-         <Avatar onClick={toggleModal} />
-         {isModalOpen && (
-          <div className="modal" id="profileModal">
+  <div className="avatar">
+    <Avatar onClick={toggleModal} />
+    {/* Modal content */}
+    {isModalOpen && (
+      <div className="modal" id="profileModal">
           <div className="modal-content">
             <span className="close" onClick={toggleModal}>&times;</span>
             {userData && (

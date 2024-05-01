@@ -118,7 +118,7 @@ export default function LeftContent({
           autoComplete="off"
           fullWidth
           InputProps={{
-            startAdornment: (
+            startadornment: (
               <InputAdornment position="start">
                 <IconButton>
                   <CiSearch />
@@ -138,7 +138,7 @@ export default function LeftContent({
           fullWidth
           onChange={handleLocationFun}
           InputProps={{
-            startAdornment: (
+            startadornment: (
               <InputAdornment position="start">
                 <IconButton>
                   <CiLocationOn />
@@ -168,12 +168,12 @@ export default function LeftContent({
             <FormControl fullWidth>
               <Select
                 value={selectedValue}
-                onChange={handleChangeSelect}
+                onChange={handleChangeSelect} 
                 fullWidth
                 displayEmpty
                 inputProps={{
                   id: "select-label",
-                  startAdornment: (
+                  startadornment: (
                     <InputAdornment position="start">
                       <IoBriefcaseOutline />
                     </InputAdornment>

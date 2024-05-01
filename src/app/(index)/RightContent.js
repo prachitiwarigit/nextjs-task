@@ -38,7 +38,7 @@ export default function RightContent({
                 <Card sx={{ width: "100%" }} className="card-boxes" key={index}>
                 
                   <div className="card-content">
-                  <a href={data.url}>
+               
                   <div>
                       <Image
                         src={`https://learnkoods-task.onrender.com${data.image}`}
@@ -47,16 +47,21 @@ export default function RightContent({
                         height={60}
                       />
                     </div>
-                  </a>
+                  
                    
 
                     <div className="card-lastsection">
+                   
                       <div>
+                    
                         <Typography variant="body1" className="content-title">
                           {data.title}
                         </Typography>
+                        
                         <div className="content-form">
+                        <a href={data.url} target="blank">
                           <div className="content-side">
+                         
                             <div>
                               <GoBriefcase />
                             </div>
@@ -66,7 +71,9 @@ export default function RightContent({
                             >
                               {data.company}
                             </Typography>
+                           
                           </div>
+                          </a>
                           <div className="content-side">
                             <div>
                               <CiLocationOn />
@@ -121,6 +128,7 @@ export default function RightContent({
                         {/* <p>{data.slug}</p> */}
                         <p style={{ marginTop: "7px" }}>{data.type}</p>
                       </div>
+                  
                       <div
                         style={{
                           width: "50px",
