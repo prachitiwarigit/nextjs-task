@@ -109,7 +109,7 @@ padding-top: 20px;
 .modal-content {
   background-color: #fefefe;
   margin: 5% auto;
-  padding: 20px;
+  padding: 30px;
   border: 1px solid #888;
   width: 80%;
 }
@@ -140,7 +140,7 @@ padding-top: 20px;
   margin: 5% auto; /* Center vertically and horizontally */
   padding: 20px;
   border: 1px solid #888;
-  width: 20%; /* 80% of modal width */
+  width: 30%; /* 80% of modal width */
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Add shadow */
 }

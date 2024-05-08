@@ -31,19 +31,16 @@ const [openRegistrationModal, setOpenRegistrationModal] = useState(false);
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userData, setUserData] = useState(null); // Initialize as null
-  const [access, setAccess] = useState(false); // Initialize as null
+  // const [access, setAccess] = useState(false); // Initialize as null
 
   
 
   
-  useEffect(() => {
-    const accessToken = window.sessionStorage.getItem("access");
-    if (accessToken) {
-      setAccess(true);
-      setIsModalOpen(true);
-    }
-  }, []); // Empty dependency array ensures this effect runs only once, when the component mounts
-  
+  const access = window.sessionStorage.getItem("access");
+  // if (accessToken) {
+  //   setAccess(true);
+  //   setIsModalOpen(true);
+  // }
  
 
   // logout part
