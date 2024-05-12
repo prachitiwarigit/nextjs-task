@@ -18,6 +18,8 @@ export default function RightContent({
   showLoader,
   count,
   page,
+  sortedDataOldest,
+  sortedDataNewest,
 }) {
   return (
     <>
@@ -31,37 +33,29 @@ export default function RightContent({
         </div>
       ) : (
         <div className="custom-container">
-          {filterSerach &&
-            filterSerach?.map((data, index) => {
-              console.log("dfsfdfsd", data?.description?.length);
-              return (
-                <Card sx={{ width: "100%" }} className="card-boxes" key={index}>
-                
-                  <div className="card-content">
-               
+          {(filterSerach || sortedDataOldest).map((data, index) => {
+            console.log("dfsfdfsd", data?.description?.length);
+            return (
+              <Card sx={{ width: "100%" }} className="card-boxes" key={index}>
+                <div className="card-content">
                   <div>
-                      <Image
-                        src={`https://learnkoods-task.onrender.com${data.image}`}
-                        alt={data.title}
-                        width={50}
-                        height={60}
-                      />
-                    </div>
-                  
-                   
+                    <Image
+                      src={`https://learnkoods-task.onrender.com${data.image}`}
+                      alt={data.title}
+                      width={50}
+                      height={60}
+                    />
+                  </div>
 
-                    <div className="card-lastsection">
-                   
-                      <div>
-                    
-                        <Typography variant="body1" className="content-title">
-                          {data.title}
-                        </Typography>
-                        
-                        <div className="content-form">
+                  <div className="card-lastsection">
+                    <div>
+                      <Typography variant="body1" className="content-title">
+                        {data.title}
+                      </Typography>
+
+                      <div className="content-form">
                         <a href={data.url} target="blank">
                           <div className="content-side">
-                         
                             <div>
                               <GoBriefcase />
                             </div>
@@ -71,78 +65,77 @@ export default function RightContent({
                             >
                               {data.company}
                             </Typography>
-                           
                           </div>
-                          </a>
-                          <div className="content-side">
-                            <div>
-                              <CiLocationOn />
-                            </div>
-                            <Typography
-                              variant="body2"
-                              className="content-sidetext"
-                            >
-                              {data.location}
-                            </Typography>
-                          </div>
-                          <div className="content-side">
-                            <div>
-                              <MdAccessTime />
-                            </div>
-                            <Typography
-                              variant="body2"
-                              className="content-sidetext"
-                            >
-                              {data.timeline}
-                            </Typography>
-                          </div>
-                          <div className="content-side">
-                            <div>
-                              <MdCameraRoll />
-                            </div>
-                            <Typography
-                              variant="body2"
-                              className="content-sidetext"
-                            >
-                              {data["min salary"]} - {data["max salary"]}
-                            </Typography>
-                          </div>
-                        </div>
-                        <Typography
-                          variant="body2"
-                          className="content-description"
-                        >
-                          {data?.description?.length > 150
-                            ? data.description.slice(0, 150) + "..."
-                            : data.description}
-                        </Typography>
-
-                        <p>{data.slug}</p>
-                        <a
-                          href={data.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Visit Company
                         </a>
-                        {/* <p>{data.slug}</p> */}
-                        <p style={{ marginTop: "7px" }}>{data.type}</p>
+                        <div className="content-side">
+                          <div>
+                            <CiLocationOn />
+                          </div>
+                          <Typography
+                            variant="body2"
+                            className="content-sidetext"
+                          >
+                            {data.location}
+                          </Typography>
+                        </div>
+                        <div className="content-side">
+                          <div>
+                            <MdAccessTime />
+                          </div>
+                          <Typography
+                            variant="body2"
+                            className="content-sidetext"
+                          >
+                            {data.timeline}
+                          </Typography>
+                        </div>
+                        <div className="content-side">
+                          <div>
+                            <MdCameraRoll />
+                          </div>
+                          <Typography
+                            variant="body2"
+                            className="content-sidetext"
+                          >
+                            {data["min salary"]} - {data["max salary"]}
+                          </Typography>
+                        </div>
                       </div>
-                  
-                      <div
-                        style={{
-                          width: "50px",
-                          display: "flex",
-                          justifyContent: "end",
-                        }}
+                      <Typography
+                        variant="body2"
+                        className="content-description"
                       >
-                        <FaRegBookmark />
-                      </div>
+                        {data?.description?.length > 150
+                          ? data.description.slice(0, 150) + "..."
+                          : data.description}
+                      </Typography>
+
+                      <p>{data.slug}</p>
+                      <a
+                        href={data.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Visit Company
+                      </a>
+                      {/* <p>{data.slug}</p> */}
+                      <p style={{ marginTop: "7px" }}>{data.type}</p>
+                    </div>
+
+                    <div
+                      style={{
+                        width: "50px",
+                        display: "flex",
+                        justifyContent: "end",
+                      }}
+                    >
+                      <FaRegBookmark />
                     </div>
                   </div>
-                </Card>
-              );
-            })}
+                </div>
+              </Card>
+            );
+          })}
 
           {count > 1 && (
             <Box

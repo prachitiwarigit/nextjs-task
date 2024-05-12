@@ -8,7 +8,7 @@ import RightContent from "./RightContent";
 import LeftContent from "./LeftContent";
 import axios from "axios";
 
-export default function Content() {
+export default function JobDropdown() {
   const [value, setValue] = useState(5);
   const [valuepage, setValuePage] = useState(5);
   const [filterSerach, setFilterSearch] = useState("");
@@ -54,11 +54,13 @@ export default function Content() {
   };
 
   useEffect(() => {
+    if (page != 1) {
       getjobcard();
+    }
   }, [page]);
-  // useEffect(() => {
-  //   getjobcard();
-  // }, []);
+  useEffect(() => {
+    getjobcard();
+  }, []);
 
   useEffect(() => {
     console.log("filterSerach0------------->", filterSerach);
@@ -102,6 +104,87 @@ export default function Content() {
     setDataCard_blank(filteredData);
   }, [jobTypes]);
 
+
+
+
+
+
+
+  const [valueOldest, setValueOldest] = useState(); // Default value
+  console.log("old",valueOldest)
+  const [valueNewest, setValueNewest] = useState();
+  console.log("new",valueNewest)
+  
+
+  const handleChangeSorting = (event) => {
+    const sortValue = event.target.value;
+  
+    // Update state with the selected sorting value
+    setValueOldest(sortValue);
+  
+    // Fetch data based on the selected sorting value
+    if (sortValue === "Oldest" || sortValue === "Newest") {
+      fetchData(sortValue);
+    }
+  };
+
+  const fetchData = (sortValue) => {
+    console.log("sortValue", sortValue)
+
+    fetch(`https://learnkoods-task.onrender.com/job_api/?sort=${sortValue}`)
+      .then(response => response.json())
+      .then(data => {
+
+        console.log("data", data.results)
+
+
+
+        // console.log("sort",sortedData)
+
+        if (sortValue === "Oldest") {
+          setValueOldest(data.results?.sort((a, b) => new Date(a.created) - new Date(b.created))); // acending
+        }
+
+        else if (sortValue === "Newest") {
+          setValueNewest(data.results?.sort((a,b) => new Date(b.created) - new Date(a.created)));  // decending
+
+
+        }
+        // if (sortValue === 10) {
+
+        //   sortedData = data.results.sort((a, b) => new Date(b.created) - new Date(a.created));
+        // } else if (sortValue === 15) {
+
+        //   sortedData = data.results.sort((a, b) => new Date(a.created) - new Date(b.created));
+        // } else {
+
+        //   sortedData = data.results;
+        // }
+
+        // Update state with sorted data
+        // setValueSorting(sortedData);
+      })
+      .catch(error => {
+        // Handle errors
+        console.error('Error fetching data:', error);
+      });
+  };
+
+  useEffect(() => {
+   // fetchData();
+   
+    if (valueOldest === "Oldest") {
+      fetchData("Oldest");
+    }
+    else {
+      fetchData("Newest");
+      
+    }
+  }, [valueOldest])
+
+
+
+
   return (
     <Grid container spacing={2}>
       <Grid item lg={4}>
@@ -116,18 +199,13 @@ export default function Content() {
         <div className="rightside custom-container">
           <Typography className="text-content">Show 10 jobs </Typography>
           <div>
-            <Select value={value} onChange={handleChange} className="select">
-              <MenuItem value={5}>Sort by (default)</MenuItem>
-              <MenuItem value={10}>Newest</MenuItem>
-              <MenuItem value={15}>Oldest</MenuItem>
+            <Select  onChange={handleChangeSorting} className="select">
+              <MenuItem value={""}>Sort by (default)</MenuItem>
+              <MenuItem value={"Newest"}>Newest</MenuItem>
+              <MenuItem value={"Oldest"}>Oldest</MenuItem>
             </Select>
 
-            <Select value={valuepage} onChange={handleClick} className="select">
-              <MenuItem value={5}>All</MenuItem>
-              <MenuItem value={10}>10 per page</MenuItem>
-              <MenuItem value={15}>20 per page</MenuItem>
-              <MenuItem value={15}>30 per page</MenuItem>
-            </Select>
+
           </div>
         </div>
 
@@ -136,11 +214,14 @@ export default function Content() {
             filterSerach === "" && locationValue === "" && dataCard_blank == ""
               ? dataCard
               : dataCard_blank
+
           }
           count={count}
           setPage={setPage}
           showLoader={showLoader}
           page={page}
+          sortedDataOldest={valueOldest === "Oldest" ? valueOldest : null} // Pass oldest sorted data as prop when "Oldest" is selected
+          sortedDataNewest={valueOldest === "Newest" ? valueNewest : null} // Pass newest sorted data as prop when "Newest" is selected
         />
       </Grid>
     </Grid>
